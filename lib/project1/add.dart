@@ -67,6 +67,7 @@ class _AddUserState extends State<AddUser> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   controller: _passwordController,
+                  obscureText: true,
                   maxLength: 10,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -78,6 +79,21 @@ class _AddUserState extends State<AddUser> {
               ElevatedButton(
                 onPressed: login,
                 child: const Text("Login"),
+              ),
+              Text("Do not have an Account?"),
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the signup page
+                  Navigator.pushNamed(context, '/signup');
+                },
+                child: Text(
+                  'Register Now',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
               ),
             ],
           ),
