@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import "package:flutter/src/widgets/container.dart";
 // ignore: unnecessary_import
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_application_1/MainPage/FirstPage.dart';
 import 'package:flutter_application_1/auth/auth_service.dart';
 
 class AddUser extends StatefulWidget {
@@ -23,6 +24,10 @@ class _AddUserState extends State<AddUser> {
 
     try {
       await authService.signInWithEmailPassword(email, password);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Firstpage()), // Replace with your actual first page widget
+      );
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context)
@@ -36,16 +41,15 @@ class _AddUserState extends State<AddUser> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "ADD USER",
+          "W e l c o m e",
           style: TextStyle(
-            color: Color.fromARGB(255, 207, 215, 236),
+            color: Colors.black,
             fontSize: 30,
             fontWeight: FontWeight.bold,
             letterSpacing: 2.0,
           ),
         ),
         centerTitle: true, // Center the title for better UI
-        backgroundColor: Color.fromARGB(255, 105, 117, 126),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -75,11 +79,28 @@ class _AddUserState extends State<AddUser> {
                     label: Text("Password"),
                   ),
                 ),
+              ), SizedBox(height: 20,),
+        SizedBox(
+          width: 370,
+          height: 45,// Adjust the width here
+          child: ElevatedButton(
+            onPressed: login,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF86ab0c), // Background color of the button
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20), // Rounded corners
               ),
-              ElevatedButton(
-                onPressed: login,
-                child: const Text("Login"),
+              padding: EdgeInsets.symmetric(vertical: 12.0), // Padding inside the button
+            ),
+            child: Text(
+              "Sign in",
+              style: TextStyle(
+                color: Colors.black, // Text color
+                fontWeight: FontWeight.bold, // Bold text
+                fontSize: 17, // Font size
               ),
+            ),
+          ),),
               Text("Do not have an Account?"),
               GestureDetector(
                 onTap: () {
@@ -89,8 +110,8 @@ class _AddUserState extends State<AddUser> {
                 child: Text(
                   'Register Now',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.blue,
+                    fontSize: 15,
+                    color: Colors.black,
                     decoration: TextDecoration.underline,
                   ),
                 ),

@@ -12,29 +12,23 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "CLUTCH",
-          style: TextStyle(
-            color: Color.fromARGB(255, 207, 215, 236),
-            fontSize: 30, // Larger font for heading
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2.0, // Adds spacing for style
-          ),
+      backgroundColor:  Color(0xFF86ab0c),
+      body: Center(
+        child: Column( mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+             Text('CLUTCH' ,style: TextStyle(fontSize: 40, color: Colors.black, fontWeight: FontWeight.bold),),
+          ],
         ),
-        centerTitle: true, // Centers the text in the AppBar
-        backgroundColor:
-            const Color.fromARGB(255, 105, 117, 126), // Optional: Change color
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, '/auth'); // Navigate to AddUser page
         },
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Color(0xFF86ab0c),
         child: const Icon(
-          Icons.arrow_right_sharp,
-          color: Color.fromARGB(255, 207, 215, 236),
-          size: 50,
+          Icons.double_arrow_outlined,
+          color: Colors.black,
+          size: 30,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

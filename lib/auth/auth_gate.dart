@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/project1/add.dart';
-import 'package:flutter_application_1/project1/signup.dart';
+import 'package:flutter_application_1/MainPage/FirstPage.dart';
+import 'package:flutter_application_1/auth/add.dart';
+import 'package:flutter_application_1/auth/signup.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthGate extends StatelessWidget {
@@ -19,9 +20,9 @@ class AuthGate extends StatelessWidget {
         }
         final session = snapshot.hasData ? snapshot.data!.session : null;
         if (session != null) {
-          return AddUser();
+          return Firstpage();
         } else {
-          return Signup();
+          return AddUser();
         }
       },
     );

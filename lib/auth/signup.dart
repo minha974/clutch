@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/MainPage/FirstPage.dart';
 
-import '../auth/auth_service.dart';
+import 'auth_service.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -25,7 +26,10 @@ class _SignupState extends State<Signup> {
     }
     try {
       await authService.signUpWithEmailPassword(email, password);
-      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Firstpage()), // Replace with your actual first page widget
+      );
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context)
@@ -39,16 +43,14 @@ class _SignupState extends State<Signup> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "ADD USER",
+          "REGISTER",
           style: TextStyle(
-            color: Color.fromARGB(255, 207, 215, 236),
             fontSize: 30,
             fontWeight: FontWeight.bold,
             letterSpacing: 2.0,
           ),
         ),
         centerTitle: true, // Center the title for better UI
-        backgroundColor: Color.fromARGB(255, 105, 117, 126),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -92,10 +94,27 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: signUp,
-                child: const Text("Sign up"),
-              ),
+              SizedBox(
+                width: 370,
+                height: 45,// Adjust the width here
+                child: ElevatedButton(
+                  onPressed: signUp,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF86ab0c), // Background color of the button
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // Rounded corners
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 12.0), // Padding inside the button
+                  ),
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      color: Colors.white, // Text color
+                      fontWeight: FontWeight.bold, // Bold text
+                      fontSize: 17, // Font size
+                    ),
+                  ),
+                ),),
             ],
           ),
         ),
