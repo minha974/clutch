@@ -12,7 +12,7 @@ class Cart extends ChangeNotifier{
         price: '3000',
         imagePath: 'assets/steering.jpg',
         description: 'description'),
-    Tool(name: 'Jockey',
+    Tool(name: 'Jack',
         price: '500',
         imagePath: 'assets/tyre.jpg',
         description: 'description'),

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/auth/add.dart';
 import 'package:flutter_application_1/vehicle_recovery/location.dart';
 import '../Service/Service.dart';
 import '../auth/auth_service.dart';
+import '../first_aid/aid.dart';
 import '../main.dart';
 import '../vids/fix.dart'; // Import your Service page
 
@@ -144,7 +145,7 @@ class _FirstpageState extends State<Firstpage> {
                           // Handle navigation for First Aid (you can add a page for it)
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => FixPage()), // Replace with the actual page
+                            MaterialPageRoute(builder: (context) => FirstAidPage()), // Replace with the actual page
                           );
                         }
                       },
@@ -195,7 +196,39 @@ class _FirstpageState extends State<Firstpage> {
                 ),
               ),
             ),
-            // Gesture Detectors for the parts and shops options
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FinalView()),
+                );
+              },
+              child: Container(
+                width: 500,
+                height: 100,
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color(0xFFEDEDED),
+                ),
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.car_repair_outlined),
+                    SizedBox(width: 7),
+                    Text(
+                      'Recovery vehicle',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),// Gesture Detectors for the parts and shops options
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -266,7 +299,7 @@ class _FirstpageState extends State<Firstpage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FinalView()),
+                  MaterialPageRoute(builder: (context) => FirstAidPage()),
                 );
               },
               child: Container(
@@ -299,7 +332,7 @@ class _FirstpageState extends State<Firstpage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FinalView()),
+                  MaterialPageRoute(builder: (context) => FirstAidPage()),
                 );
               },
               child: Container(

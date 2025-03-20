@@ -6,12 +6,15 @@ import 'package:flutter_application_1/auth/signup.dart';
 import 'package:provider/provider.dart';
 import 'MainPage/FirstPage.dart';
 import 'MainPage/cart.dart';
+import 'first_aid/aid.dart';
+import 'first_aid/aid3.dart';
+import 'first_aid/carta.dart'; // Import First Aid Cart Provider
 import 'project1/home.dart';
 import 'auth/add.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'vehicle_recovery/location.dart';
-// Import your location helper file
 
+// Import your location helper file
 void main() async {
   await Supabase.initialize(
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRybmJteWRmbmd2ZGJmcG16aXZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1NjQ1MDYsImV4cCI6MjA1NjE0MDUwNn0.aY7W4jvEGC7sfiQLLZ9HYRsa5X14TgXXq572EwwJNnM',
@@ -25,21 +28,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => Cart(),
-      child: MaterialApp(
-        title: "App",
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/', // Ensure the app starts on HomePage
-        routes: {
-          '/': (context) => const HomePage(),
-          '/add': (context) => const AddUser(),
-          '/auth': (context) => const AuthGate(),
-          '/signup': (context) => const Signup(),
-          '/fst': (context) =>  Firstpage(),
-        },
+      child: ChangeNotifierProvider(
+        create: (context) => FirstAidCart(), // Provide First Aid Cart here
+        child: MaterialApp(
+          title: "App",
+          debugShowCheckedModeBanner: false,
+          initialRoute: '/', // Ensure the app starts on HomePage
+          routes: {
+            '/': (context) => const HomePage(),
+            '/add': (context) => const AddUser(),
+            '/auth': (context) => const AuthGate(),
+            '/signup': (context) => const Signup(),
+            '/fst': (context) => FirstAidPage(), // Link to First Aid Page// Link to First Aid Cart Page
+          },
+        ),
       ),
     );
   }
 }
+
 class Restaurant {
   final String name;
   final String address;
@@ -54,6 +61,7 @@ class Restaurant {
     required this.longitude,
   });
 }
+
 // Predefined list of restaurants with coordinates
 List<Restaurant> allRestaurants = [
   Restaurant(
@@ -75,6 +83,7 @@ List<Restaurant> allRestaurants = [
     longitude: -74.0040,
   ),
 ];
+
 /// The main screen of the app (StatefulWidget to handle state changes)
 class FinalView extends StatefulWidget {
   const FinalView({super.key});
@@ -104,7 +113,8 @@ class _FinalViewState extends State<FinalView> {
       _isLoadingRestaurants = false;
     });
 
-    final locationData = await locationHelper.getUserLocation(); // Fetch location
+    final locationData = await locationHelper
+        .getUserLocation(); // Fetch location
 
     if (locationData != null) {
       setState(() {
@@ -117,7 +127,8 @@ class _FinalViewState extends State<FinalView> {
       });
 
       // Fetch nearby restaurants after location is retrieved
-      await getNearbyRestaurants(locationData['latitude'], locationData['longitude']);
+      await getNearbyRestaurants(
+          locationData['latitude'], locationData['longitude']);
     } else {
       setState(() {
         userLocation = 'Location not found'; // Display error message
@@ -136,7 +147,8 @@ class _FinalViewState extends State<FinalView> {
 
     List<Restaurant> nearby = [];
     for (var restaurant in allRestaurants) {
-      double distance = calculateDistance(userLat, userLon, restaurant.latitude, restaurant.longitude);
+      double distance = calculateDistance(
+          userLat, userLon, restaurant.latitude, restaurant.longitude);
 
       // Debug: Print each restaurant's distance from the user
       print('Restaurant: ${restaurant.name}, Distance: $distance km');
@@ -179,7 +191,8 @@ class _FinalViewState extends State<FinalView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nearby Showrooms'),
+        title: const Text('Recovery Vehicle'),
+        backgroundColor: Color(0xFF86ab0c),
       ),
       body: Center(
         child: _isLoading
@@ -193,31 +206,56 @@ class _FinalViewState extends State<FinalView> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => getNearbyRestaurants(40.7128, -74.0060), // New York location
-              child: const Text('Refresh Location'),
+              onPressed: () {
+                _showSuccessDialog(context);
+              },
+              child: const Text('Send Location', style: TextStyle(color: Color(0xFF86ab0c)),),
             ),
             const SizedBox(height: 20),
-            if (_isLoadingRestaurants)
-              const CircularProgressIndicator()
-            else if (nearbyRestaurants.isEmpty)
-              const Text('No nearby restaurants found')
-            else
-              Expanded(
-                child: ListView.builder(
-                  itemCount: nearbyRestaurants.length,
-                  itemBuilder: (context, index) {
-                    final restaurant = nearbyRestaurants[index];
-                    return ListTile(
-                      title: Text(restaurant.name),
-                      subtitle: Text('${restaurant.address} - ${restaurant.distance.toStringAsFixed(2)} km'),
-                      leading: const Icon(Icons.restaurant),
-                    );
-                  },
-                ),
-              ),
           ],
         ),
       ),
+    );
+  }
+
+// Function to show the success dialog
+  void _showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFF86ab0c),
+          // Green background color for the dialog
+          title: const Text(
+            'Successfully Sent!',
+            style: TextStyle(
+              color: Colors.white, // White color for the title text
+              fontWeight: FontWeight.bold, // Bold title text
+            ),
+          ),
+          content: const Text(
+            'Recovery vehicle is on the way.',
+            style: TextStyle(
+              color: Colors.white, // White color for the content text
+              fontWeight: FontWeight.bold, // Bold content text
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pop(); // Close the dialog when "OK" is pressed
+              },
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  color: Colors.white, // White color for the button text
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

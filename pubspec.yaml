@@ -61,6 +61,9 @@ flutter:
     - assets/tyre.jpg
     - assets/mirror.jpg
     - assets/steering.jpg
+    - assets/gauze.jpg
+    - assets/bandage.jpg
+    - assets/antiseptic.jpg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

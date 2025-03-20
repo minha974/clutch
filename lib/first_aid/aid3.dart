@@ -1,44 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/MainPage/tool.dart';
+import 'aid2.dart';
+ // Import FirstAid model
 
+class FirstAidCart extends ChangeNotifier {
+  // List of FirstAid items available for purchase
+  List<FirstAid> firstAidShop = [
+    FirstAid(
+      name: 'Bandage',
+      price: '10',
+      imagePath: 'assets/bandage.jpg', // Replace with your image
+      description: 'A medical bandage for injuries',
+    ),
+    FirstAid(
+      name: 'Antiseptic',
+      price: '15',
+      imagePath: 'assets/antiseptic.jpg', // Replace with your image
+      description: 'Antiseptic solution for cleaning wounds',
+    ),
+    FirstAid(
+      name: 'Gauze',
+      price: '5',
+      imagePath: 'assets/gauze.jpg', // Replace with your image
+      description: 'Sterile gauze pads',
+    ),
+    // Add more items as needed
+  ];
 
-class AidTile extends StatelessWidget {
-  Tool aid;
-  void Function()? onTap;
-  AidTile({super.key, required this.aid, required this.onTap});
+  // List of items in the user's cart
+  List<FirstAid> userCart = [];
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left:25),
-      width:280,
-      decoration:BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(children: [
-        Image.asset(aid.imagePath, width: 200,),
-        Text(aid.description, style: TextStyle(color: Colors.grey),),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  //tool name
-                  Text(aid.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
-                  //price
-                  Text(' \$ '+aid.price, style: TextStyle(color: Colors.grey),),
-                  //plus button
-                ],
-              ),
-              GestureDetector(onTap: onTap,child: Container(child: Icon(Icons.add, color: Color(0xFF86ab0c), size: 30,))),
-            ],
-          ),
-        )
-      ],
+  // Get the list of available first aid items
+  List<FirstAid> getFirstAidList() {
+    return firstAidShop;
+  }
 
-      ),
-    );
+  // Get the user's cart
+  List<FirstAid> getUserCart() {
+    return userCart;
+  }
+
+  // Add item to the cart
+  void addItemToCart(FirstAid firstAid) {
+    userCart.add(firstAid);
+    notifyListeners();
+  }
+
+  // Remove item from the cart
+  void removeItemFromCart(FirstAid firstAid) {
+    userCart.remove(firstAid);
+    notifyListeners();
   }
 }
